@@ -1,0 +1,31 @@
+
+
+    <% @topics.each do |topic| %>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><%= topic.title %></h3>
+            </div>
+            <div class="panel-body">
+
+                <div>By: <%= topic.user %> | posted at: <%= topic.created_at %></div>
+                <div> <%= link_to 'Show', topic %> | <%= link_to 'Edit', edit_topic_path(topic) %> | <%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+                <div><%= topic.comment %></div>
+                <%= pluralize(topic.votes.count, "vote") %>
+                <div><%= link_to '+1', upvote_topic_path(topic), method: :post %></div>
+
+
+            </div>
+   
+
+        </div>
+
+      <% end %>   
+
+<%= link_to 'New Topic', new_topic_path %>
+
+
+
+
+
+
+
