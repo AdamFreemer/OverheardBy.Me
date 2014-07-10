@@ -28,9 +28,11 @@ gem 'spring', group: :development
 
 gem "capistrano", group: :development
 
-gem "therubyracer"
-gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
-gem "twitter-bootstrap-rails"
+gem 'therubyracer'
+gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem 'twitter-bootstrap-rails'
+
+gem 'passenger'
 
 #gem 'rails_bootstrap_navbar'
 # Use ActiveModel has_secure_password

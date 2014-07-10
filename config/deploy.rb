@@ -1,17 +1,23 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
+# Define where can Capistrano access the source repository
+# set :repo_url, 'https://github.com/[user name]/[application name].git'
+set :scm, :git
+set :application, 'overheard'
+set :repo_url, 'https://github.com/AdamFreemer/overheard.git'
+set :branch, "master"
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-# Default deploy_to directory is /var/www/my_app
-# set :deploy_to, '/var/www/my_app'
+# Define where to put your application code
+set :deploy_to, "/var/www/overheard"
 
-# Default value for :scm is :git
-# set :scm, :git
+set :pty, true
+
+set :format, :pretty
+
 
 # Default value for :format is :pretty
 # set :format, :pretty
