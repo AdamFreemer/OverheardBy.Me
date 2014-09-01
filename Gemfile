@@ -26,13 +26,25 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring', group: :development
 
-gem "capistrano", group: :development
+# gem "capistrano", group: :development
 
 gem 'therubyracer'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'twitter-bootstrap-rails'
 
-gem 'passenger'
+gem 'unicorn'
+
+gem 'acts-as-taggable-on'
+
+
+
+group :development do
+	gem 'capistrano',  '~> 2.15.5'
+	gem 'capistrano-rbenv'
+	gem 'capistrano-unicorn'	
+end
+
+
 
 #gem 'rails_bootstrap_navbar'
 # Use ActiveModel has_secure_password

@@ -1,5 +1,11 @@
+# Load DSL and Setup Up Stages
+require 'bundler/capistrano'
+
+# Includes default deployment tasks
+require 'capistrano-unicorn'
+
 # config valid only for Capistrano 3.1
-lock '3.2.1'
+#lock '3.2.1'
 
 # Define where can Capistrano access the source repository
 # set :repo_url, 'https://github.com/[user name]/[application name].git'
@@ -13,6 +19,7 @@ set :branch, "master"
 
 # Define where to put your application code
 set :deploy_to, "/var/www/overheard"
+set :shared_path, "/var/www/overheard/shared" 
 
 set :pty, true
 
@@ -62,3 +69,5 @@ namespace :deploy do
   end
 
 end
+
+#after "deploy", "deploy:migrate"

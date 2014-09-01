@@ -13,6 +13,6 @@ server '162.243.120.210', user: 'root', roles: %w{web}
 set :ssh_options, {
     forward_agent: false,
     auth_methods: %w(password),
-    password: 'madeira01',
+    password: 'qx2xsze8',
     user: 'root',
 }

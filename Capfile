@@ -1,9 +1,15 @@
-# Load DSL and Setup Up Stages
-require 'capistrano/setup'
 
-# Includes default deployment tasks
-require 'capistrano/deploy'
+puts "##### Capfile running ##### "
 
+load 'deploy'
+puts "##### Capfile: 'deploy' executed ##### "
+
+load 'config/deploy'
+
+load 'deploy/assets'
+puts "##### Capfile: 'config/deploy' executed ##### "
+
+#require 'capistrano/ext/multistage'
 # Includes tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
@@ -23,3 +29,4 @@ require 'capistrano/deploy'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
+puts "##### Capfile completed ##### "
