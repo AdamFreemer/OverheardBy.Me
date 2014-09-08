@@ -1,73 +1,74 @@
-# Load DSL and Setup Up Stages
 require 'bundler/capistrano'
+# require 'capistrano-rbenv'
+# require 'capistrano/ext/multistage'
+#require 'capistrano-unicorn'
+#require "whenever/capistrano"
 
-# Includes default deployment tasks
-require 'capistrano-unicorn'
+load 'deploy/assets'
 
-# config valid only for Capistrano 3.1
-#lock '3.2.1'
 
-# Define where can Capistrano access the source repository
-# set :repo_url, 'https://github.com/[user name]/[application name].git'
-set :scm, :git
-set :application, 'overheard'
-set :repo_url, 'https://github.com/AdamFreemer/overheard.git'
-set :branch, "master"
+puts "####### Starting deploy.rb"
 
-# Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-# Define where to put your application code
+set :ssh_options, {
+  config: false
+  #Other options...
+}
+
+set :scm, :none
+set :repository, "."
+set :deploy_via, :copy
+
+set :application, "overheard"
+
 set :deploy_to, "/var/www/overheard"
 set :shared_path, "/var/www/overheard/shared" 
 
-set :pty, true
+server "162.243.120.210", :web, :app, :db, :primary => true
 
-set :format, :pretty
+set :user, "root"
+set :password, "qx2xsze8"
+set :group, "root"
+set :deploy_to, "/var/www/overheard"
+set :shared_path, "/var/www/overheard/shared" 
+set :use_sudo, false
+set :deploy_via, :copy
+set :copy_strategy, :export
+set :copy_compression,    :gzip
 
 
-# Default value for :format is :pretty
-# set :format, :pretty
+#set :bundle_cmd, "LANG='en_US.UTF-8' LC_ALL='en_US.UTF-8' RBENV_VERSION='2.1.2' bundle"
+set :bundle_flags, "--verbose --binstubs --without development"
 
-# Default value for :log_level is :debug
-# set :log_level, :debug
+# before "deploy:setup", "deploy:install_packages" # Make sure we have latest softwares
+# after "deploy:setup", "deploy:setup_permissions"
+# after "deploy", "deploy:cleanup" # keep only the last 5 releases
 
-# Default value for :pty is false
-# set :pty, true
+after "deploy", "deploy:migrate"
+after "deploy", "deploy:restart"
 
-# Default value for :linked_files is []
-# set :linked_files, %w{config/database.yml}
+# after 'deploy', "unicorn:restart"
 
-# Default value for linked_dirs is []
-# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+########### File defaults
 
-# Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+# set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
+# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-# Default value for keep_releases is 5
-# set :keep_releases, 5
+# role :app, "your app-server here"                          # This may be the same as your `Web` server
+# role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
+# role :db,  "your slave db-server here"
 
-namespace :deploy do
+# if you want to clean up old releases on each deploy uncomment this:
+# after "deploy:restart", "deploy:cleanup"
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
-    end
-  end
+# if you're still using the script/reaper helper you will need
+# these http://github.com/rails/irs_process_scripts
 
-  after :publishing, :restart
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
-
-end
-
-#after "deploy", "deploy:migrate"
+# If you are using Passenger mod_rails uncomment this:
+# namespace :deploy do
+#   task :start do ; end
+#   task :stop do ; end
+#   task :restart, :roles => :app, :except => { :no_release => true } do
+#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+#   end
+# end

@@ -1,31 +1,74 @@
 
+    <body> 
 
-    <% @topics.each do |topic| %>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><%= topic.title %></h3>
-            </div>
-            <div class="panel-body">
-
-                <div>By: <%= topic.user %> | posted at: <%= topic.created_at %></div>
-                <div> <%= link_to 'Show', topic %> | <%= link_to 'Edit', edit_topic_path(topic) %> | <%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' } %></div>
-                <div><%= topic.comment %></div>
-                <%= pluralize(topic.votes.count, "vote") %>
-                <div><%= link_to '+1', upvote_topic_path(topic), method: :post %></div>
+        <div class="container">
+            <div class="row">
+                <div class="span9">
 
 
-            </div>
-   
+                    <% @topics.each do |topic| %>
+                    <div class="post-wrapper">
+                        <h3><a class="post-title" href="single.html"><%= topic.title %></a> <i class="icon-camera"></i></h3>
+                        <p><%= topic.comment %></p>   
+                        <p><a href="single.html" class="more-link">Read more  →</a></p>
+                        <hr>
+                        <ul class="meta">
+                            <li class="post-date"><i class="icon-calendar"></i><a href="">March 28th, 2012</a></li>
+                            <li><i class="icon-user"></i><a href="" title="Posts by admin" rel="author">admin</a></li>
+                            <li><i class="icon-list"></i><a href="" title="View all posts in General News" rel="category tag">Web Design</a></li>
+                            <li><i class="icon-comment"></i><a href="">4 Comments</a></li>
+                        </ul> 
+                        <ul class="tags">
+                            <li class="tags-list"><i class="icon-tags"></i>  <a href="" rel="tag">news</a> <a href="" rel="tag">general</a></li>
+                        </ul>  
+                    </div><!-- end .post-wrapper -->
+                    <% end %>  
+                </div><!-- end .span8-->
 
-        </div>
+            </div><!-- end row -->
+        </div><!-- end .container -->   
+        <!-- 
+        <div id="toTop"><i class="icon-arrow-up icon-large"></i></div>
+        -->
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
 
-      <% end %>   
+     
+        <script src="/javascripts/jquery.isotope.min.js"></script>
+        <script src="/javascripts/jquery.prettyPhoto.js"></script>
+        <script src="/javascripts/custom.js"></script>
+        <!-- tab script -->
+        <script>
+            $(function() {
+                $('#myTab a:first').tab('show');
+            })
+        </script>
+        <script type="text/javascript">
+            // cache container
+            var $container = $('#portfolio-container');
+            // initialize isotope
+            $container.isotope({
+                // options...
+                filter: '*'
+            });
 
-<%= link_to 'New Topic', new_topic_path %>
-
-
-
-
-
+            // filter items when filter link is clicked
+            $('#filters a').click(function() {
+                var selector = $(this).attr('data-filter');
+                $container.isotope({ filter: selector });
+                return false;
+            });
+            // update columnWidth on window resize
+            $(window).smartresize(function() {
+                $container.isotope('reLayout');
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("a[rel^='prettyPhoto']").prettyPhoto();
+            });
+        </script>
+    </body>
 
 
