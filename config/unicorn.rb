@@ -4,7 +4,7 @@ working_directory "/var/www/overheardby.me/current"
 
 # Unicorn PID file location
 # pid "/path/to/pids/unicorn.pid"
-pid "/var/www/overheardby.me/current/tmp/pids/unicorn.pid"
+pid "/var/www/overheardby.me/shared/pids/unicorn.pid"
 
 # Path to logs
 # stderr_path "/path/to/log/unicorn.log"

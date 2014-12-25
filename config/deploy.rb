@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 # require 'capistrano-rbenv'
 # require 'capistrano/ext/multistage'
-#require 'capistrano-unicorn'
+require 'capistrano-unicorn'
 #require "whenever/capistrano"
 
 load 'deploy/assets'
@@ -27,8 +27,8 @@ server "104.131.43.54", :web, :app, :db, :primary => true
 set :user, "root"
 #set :password, "qx2xsze8"
 set :group, "root"
-set :deploy_to, "/var/www/overheard"
-set :shared_path, "/var/www/overheard/shared"
+set :deploy_to, "/var/www/overheardby.me"
+set :shared_path, "/var/www/overheardby.me/shared"
 set :use_sudo, false
 set :deploy_via, :copy
 set :copy_strategy, :export
