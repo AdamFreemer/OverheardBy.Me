@@ -6,9 +6,7 @@ require 'bundler/capistrano'
 
 load 'deploy/assets'
 
-
 puts "####### Starting deploy.rb"
-
 
 set :ssh_options, {
   config: false
@@ -21,16 +19,16 @@ set :deploy_via, :copy
 
 set :application, "overheard"
 
-set :deploy_to, "/var/www/overheard"
-set :shared_path, "/var/www/overheard/shared" 
+set :deploy_to, "/var/www/overheardby.me/"
+set :shared_path, "/var/www/overheardby.me/shared"
 
-server "162.243.120.210", :web, :app, :db, :primary => true
+server "104.131.43.54", :web, :app, :db, :primary => true
 
 set :user, "root"
-set :password, "qx2xsze8"
+#set :password, "qx2xsze8"
 set :group, "root"
 set :deploy_to, "/var/www/overheard"
-set :shared_path, "/var/www/overheard/shared" 
+set :shared_path, "/var/www/overheard/shared"
 set :use_sudo, false
 set :deploy_via, :copy
 set :copy_strategy, :export
@@ -46,6 +44,20 @@ set :bundle_flags, "--verbose --binstubs --without development"
 
 after "deploy", "deploy:migrate"
 after "deploy", "deploy:restart"
+
+# Allows for multiple user access with ssh, list other dir's after File... ,
+set :ssh_options, {
+   forward_agent: true,
+   keys: [
+       File.join(ENV['HOME'], '.ssh', 'dig_ocean') # , ...
+   ]
+}
+
+task :remove_extended_attributes_dot_underscore_files do
+  run "find #{release_path} -name '._*' -delete"
+end
+
+after "deploy", "deploy:cleanup", "deploy:migrate", "deploy:restart", "remove_extended_attributes_dot_underscore_files", "unicorn:restart"
 
 # after 'deploy', "unicorn:restart"
 
