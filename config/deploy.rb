@@ -42,8 +42,8 @@ set :bundle_flags, "--verbose --binstubs --without development"
 # after "deploy:setup", "deploy:setup_permissions"
 # after "deploy", "deploy:cleanup" # keep only the last 5 releases
 
-after "deploy", "deploy:migrate"
-after "deploy", "deploy:restart"
+#after "deploy", "deploy:migrate"
+#after "deploy", "deploy:restart"
 
 # Allows for multiple user access with ssh, list other dir's after File... ,
 set :ssh_options, {
