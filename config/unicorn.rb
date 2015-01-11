@@ -12,7 +12,7 @@ GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
 
 
 
-listen "/tmp/unicorn.overheardbyme.sock"
+listen "/var/www/overheardby.me/shared/tmp/unicorn.overheardbyme.sock"
 # listen 2000
 
 
@@ -20,7 +20,7 @@ working_directory "/var/www/overheardby.me/current"
 pid "/var/www/overheardby.me/shared/pids/unicorn.pid"
 
 
-stderr_path "#{shared_path}/log/unicorn.stderr.log"
+stderr_path "/var/www/overheardby.me/shared/log/unicorn.stderr.log"
 
 
 
